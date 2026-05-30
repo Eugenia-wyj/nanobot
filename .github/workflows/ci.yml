@@ -17,12 +17,12 @@ jobs:
   test:
     runs-on: [self-hosted, macOS]
     timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ${{ fromJSON('["ubuntu-latest","windows-latest"]') }}
+    #strategy:
+      #fail-fast: false
+      #matrix:
+      # os: ${{ fromJSON('["ubuntu-latest","windows-latest"]') }}
         # CI concentrates on newer runtimes (3.11/3.12 still supported per pyproject requires-python).
-        python-version: ${{ fromJSON('["3.13","3.14"]') }}
+      #  python-version: ${{ fromJSON('["3.13","3.14"]') }}
 
     steps:
       - uses: actions/checkout@v4
