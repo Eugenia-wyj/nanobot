@@ -106,7 +106,10 @@ dev = [
     "ruff>=0.1.0",
     "pymupdf>=1.25.0",
 ]
-
+[tool.uv]
+override-dependencies = [
+    "python-olm; sys_platform == 'linux'"
+]
 [project.scripts]
 nanobot = "nanobot.cli.commands:app"
 
