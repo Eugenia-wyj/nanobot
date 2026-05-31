@@ -48,4 +48,11 @@ jobs:
         run: uv run ruff check nanobot --select F
 
       - name: Run tests
-        run: uv run pytest tests/
+        run: uv run pytest --cov=nanobot --cov-report=html tests/
+
+      - name: Upload HTML Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-coverage-report
+          path: htmlcov/
+          retention-days: 7
