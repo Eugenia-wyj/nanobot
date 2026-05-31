@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ${{ fromJSON('["ubuntu-latest","windows-latest"]') }}
+        os: ${{ fromJSON('["ubuntu-latest","windows-latest","macos-latest"]') }}
         # CI concentrates on newer runtimes (3.11/3.12 still supported per pyproject requires-python).
         python-version: ${{ fromJSON('["3.13","3.14"]') }}
 
@@ -40,10 +40,19 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libolm-dev build-essential
 
       - name: Install dependencies
+        env:
+          CMAKE_POLICY_VERSION_MINIMUM: "3.5"
         run: uv sync --all-extras
 
       - name: Lint with ruff
         run: uv run ruff check nanobot --select F
 
       - name: Run tests
-        run: uv run pytest tests/
+        run: uv run pytest --cov=nanobot --cov-report=html tests/
+
+      - name: Upload HTML Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-coverage-report
+          path: htmlcov/
+          retention-days: 7
